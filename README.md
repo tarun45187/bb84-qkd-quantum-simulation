@@ -8,21 +8,25 @@
 
 ## Table of Contents
 
-- [Problem Statement Addressed](#a-problem-statement-addressed)
-- [Circuit Design & Methodology](#b-circuit-design--methodology)
-- [Installation & Execution Commands](#c-installation--execution-commands)
-- [Key Output Figures & Metrics](#d-key-output-figures--metrics)
-  - [Clean Channel (No Eavesdropper)](#clean-channel-no-eavesdropper)
-  - [Intercept-Resend Attack (Eve Active)](#intercept-resend-attack-eve-active)
-  - [PQC Comparative Result](#pqc-comparative-result)
+- [Problem Statement Addressed](#problem-statement)
+- [Circuit Design & Methodology](#circuit-design)
+- [Installation & Execution Commands](#installation)
+- [Key Output Figures & Metrics](#output-metrics)
+  - [Clean Channel (No Eavesdropper)](#clean-channel)
+  - [Intercept-Resend Attack (Eve Active)](#intercept-resend)
+  - [PQC Comparative Result](#pqc-result)
 - [Project Structure](#project-structure)
 - [License](#license)
 
 ---
 
+<a name="problem-statement"></a>
+
 ## (a) Problem Statement Addressed
 
 Classical asymmetric encryption is vulnerable to Shor's algorithm on fault-tolerant quantum computers. This project implements an end-to-end BB84 Quantum Key Distribution (QKD) protocol using IBM Qiskit, evaluating information leakage under channel noise and eavesdropping, while benchmarking against NIST Post-Quantum Cryptography (ML-KEM / Kyber).
+
+<a name="circuit-design"></a>
 
 ## (b) Circuit Design & Methodology
 
@@ -32,6 +36,8 @@ Classical asymmetric encryption is vulnerable to Shor's algorithm on fault-toler
    - Entanglement: Probe qubits coupled via CNOT gates.
 3. **Sifting & Post-Processing:** Public basis reconciliation, QBER calculation, error correction (Cascade/Winnow), and privacy amplification (Toeplitz hashing).
 4. **PQC Comparative Study:** Benchmarking BB84 QKD against NIST FIPS 203 ML-KEM (Kyber-512/768/1024).
+
+<a name="installation"></a>
 
 ## (c) Installation & Execution Commands
 
@@ -51,7 +57,11 @@ npm start
 # Open http://localhost:3000 in your browser
 ```
 
+<a name="output-metrics"></a>
+
 ## (d) Key Output Figures & Metrics
+
+<a name="clean-channel"></a>
 
 ### Clean Channel (No Eavesdropper)
 
@@ -62,6 +72,8 @@ Based on our 64-qubit simulation pipeline over a 15.0 km fiber configuration wit
 - **Mutual Info Advantage (ΔI):** +0.919 (Valid since ΔI > 0)
 - **Protocol Status:** ✅ SECURE — Key Distilled Successfully
 
+<a name="intercept-resend"></a>
+
 ### Intercept-Resend Attack (Eve Active)
 
 - **Quantum Bit Error Rate (QBER):** ~25% (exceeds 11% Shor-Preskill threshold)
@@ -69,11 +81,15 @@ Based on our 64-qubit simulation pipeline over a 15.0 km fiber configuration wit
 - **Asymptotic Secret Key Rate (R):** 0.000 (0%)
 - **Protocol Status:** 🚨 ABORTED — Eavesdropper Detected
 
+<a name="pqc-result"></a>
+
 ### PQC Comparative Result
 
 BB84 provides **information-theoretic** (unconditional) security independent of computational assumptions, whereas ML-KEM offers software-deployable lattice-based security suitable for global internet deployment.
 
 ---
+
+<a name="project-structure"></a>
 
 ## Project Structure
 
@@ -92,6 +108,8 @@ BB84 provides **information-theoretic** (unconditional) security independent of 
     ├── server.js               # Express.js static server & API
     └── package.json            # Node.js dependencies
 ```
+
+<a name="license"></a>
 
 ## License
 

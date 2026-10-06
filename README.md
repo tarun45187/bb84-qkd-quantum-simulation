@@ -2,6 +2,7 @@
 
 > **Track 7:** Information-Theoretic Cybersecurity via BB84 QKD (RPI Prompt)  
 > **Platform:** IBM Quantum & Qiskit SDK  
+> **Pitch Deck (PDF):** [View Presentation on Google Drive](https://drive.google.com/file/d/1VFOKfVsk9tjdsVn4-V8U4lGosyDZcOUR/view?usp=sharing)  
 > **Video Demonstration:** [PASTE YOUR YOUTUBE/LOOM/DRIVE LINK HERE]
 
 ---

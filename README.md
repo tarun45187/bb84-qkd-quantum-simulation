@@ -6,10 +6,26 @@
 
 ---
 
+## Table of Contents
+
+- [Problem Statement Addressed](#a-problem-statement-addressed)
+- [Circuit Design & Methodology](#b-circuit-design--methodology)
+- [Installation & Execution Commands](#c-installation--execution-commands)
+- [Key Output Figures & Metrics](#d-key-output-figures--metrics)
+  - [Clean Channel (No Eavesdropper)](#clean-channel-no-eavesdropper)
+  - [Intercept-Resend Attack (Eve Active)](#intercept-resend-attack-eve-active)
+  - [PQC Comparative Result](#pqc-comparative-result)
+- [Project Structure](#project-structure)
+- [License](#license)
+
+---
+
 ## (a) Problem Statement Addressed
+
 Classical asymmetric encryption is vulnerable to Shor's algorithm on fault-tolerant quantum computers. This project implements an end-to-end BB84 Quantum Key Distribution (QKD) protocol using IBM Qiskit, evaluating information leakage under channel noise and eavesdropping, while benchmarking against NIST Post-Quantum Cryptography (ML-KEM / Kyber).
 
 ## (b) Circuit Design & Methodology
+
 1. **State Preparation:** Alice encodes random bits in Rectilinear (Z) or Diagonal (X) bases.
 2. **Eavesdropping Simulation:**
    - Intercept-Resend: Eve measures in random bases and re-prepares states.
@@ -18,6 +34,7 @@ Classical asymmetric encryption is vulnerable to Shor's algorithm on fault-toler
 4. **PQC Comparative Study:** Benchmarking BB84 QKD against NIST FIPS 203 ML-KEM (Kyber-512/768/1024).
 
 ## (c) Installation & Execution Commands
+
 ```bash
 # Clone the repository
 git clone https://github.com/tarun45187/bb84-qkd-quantum-simulation.git
@@ -37,6 +54,7 @@ npm start
 ## (d) Key Output Figures & Metrics
 
 ### Clean Channel (No Eavesdropper)
+
 Based on our 64-qubit simulation pipeline over a 15.0 km fiber configuration with no attack:
 - **Quantum Bit Error Rate (QBER):** ~1% (channel noise only)
 - **Binary Shannon Entropy H₂(QBER):** ~0.081
@@ -45,17 +63,20 @@ Based on our 64-qubit simulation pipeline over a 15.0 km fiber configuration wit
 - **Protocol Status:** ✅ SECURE — Key Distilled Successfully
 
 ### Intercept-Resend Attack (Eve Active)
+
 - **Quantum Bit Error Rate (QBER):** ~25% (exceeds 11% Shor-Preskill threshold)
 - **Binary Shannon Entropy H₂(QBER):** ~0.811
 - **Asymptotic Secret Key Rate (R):** 0.000 (0%)
 - **Protocol Status:** 🚨 ABORTED — Eavesdropper Detected
 
 ### PQC Comparative Result
+
 BB84 provides **information-theoretic** (unconditional) security independent of computational assumptions, whereas ML-KEM offers software-deployable lattice-based security suitable for global internet deployment.
 
 ---
 
 ## Project Structure
+
 ```
 ├── index.html                  # Main interactive simulator & dashboard
 ├── pqc-benchmark.html          # PQC comparative benchmark studio
@@ -73,4 +94,5 @@ BB84 provides **information-theoretic** (unconditional) security independent of 
 ```
 
 ## License
+
 This project was developed for the IBM Qiskit Fall Fest 2026 Hackathon (Track 07).

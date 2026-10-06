@@ -17,6 +17,8 @@
   - [Intercept-Resend Attack (Eve Active)](#intercept-resend)
   - [PQC Comparative Result](#pqc-result)
 - [Project Structure](#project-structure)
+- [Pitch Deck](#pitch-deck)
+- [Acknowledgements & Citations](#acknowledgements)
 - [License](#license)
 
 ---
@@ -109,6 +111,19 @@ BB84 provides **information-theoretic** (unconditional) security independent of 
     ├── server.js               # Express.js static server & API
     └── package.json            # Node.js dependencies
 ```
+
+<a name="pitch-deck"></a>
+
+## Pitch Deck
+
+📄 **[View Pitch Deck (PDF) on Google Drive](https://drive.google.com/file/d/1VFOKfVsk9tjdsVn4-V8U4lGosyDZcOUR/view?usp=sharing)**
+
+<a name="acknowledgements"></a>
+
+## Acknowledgements & Citations
+
+- **Code Assistance:** AI coding assistants (including Antigravity / Gemini) were used to help structure, generate, and troubleshoot the Python and Qiskit simulation code.
+- **Visuals & UI:** AI image generators were utilized for certain presentation graphics, and external open-source templates/layouts were referenced for the slide deck design.
 
 <a name="license"></a>
 

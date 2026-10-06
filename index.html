@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Information-Theoretic Cybersecurity with BB84 QKD · RPI &amp; IBM Quantum</title>
+  <meta name="description" content="Rensselaer Polytechnic Institute (RPI) & IBM Quantum Track 07: BB84 QKD Simulation & NIST PQC Comparative Study" />
+  
+  <link rel="stylesheet" href="assets/css/vendor/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/quantum.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Header Bar -->
+    <header class="header-bar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-atom" style="font-size: 1.4rem; color: #fff;"></i>
+        </div>
+        <div>
+          <div class="brand-title">Quantum<span>Lab</span></div>
+          <div class="brand-subtitle">RPI &amp; IBM Quantum · Track 07</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <button type="button" class="nav-link active" id="btnNavBriefing">
+          <i class="fa-solid fa-file-lines"></i> Challenge Briefing
+        </button>
+        <button type="button" class="nav-link" id="btnNavSimulator">
+          <i class="fa-solid fa-play"></i> Interactive Simulator
+        </button>
+        <a href="pqc-benchmark.html" class="nav-link">
+          <i class="fa-solid fa-chart-simple"></i> PQC Benchmark
+        </a>
+        <a href="project-architecture.html" class="nav-link">
+          <i class="fa-solid fa-book-open"></i> Theory &amp; Math
+        </a>
+      </nav>
+    </header>
+
+    <!-- =========================================================================
+         CHALLENGE BRIEFING CARD (EXACTLY MATCHING USER SCREENSHOTS)
+         ========================================================================= -->
+    <section class="challenge-modal-card" id="challengeBriefingCard">
+      <!-- Top Meta Row -->
+      <div class="challenge-top-meta">
+        <div class="challenge-badges-row">
+          <div class="track-badge">
+            <span class="track-label">Track</span>
+            <span class="track-num">07</span>
+          </div>
+          <div>
+            <div class="track-category">Cybersecurity<br />&amp; Networks</div>
+          </div>
+          <span class="difficulty-pill">Intermediate</span>
+        </div>
+
+        <button type="button" class="challenge-close-btn" id="btnCloseToSimulator" title="Switch to Live Simulator">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="challenge-main-title">
+        Information-Theoretic Cybersecurity with BB84 Quantum Key Distribution
+      </h1>
+
+      <!-- Affiliation -->
+      <div class="challenge-affiliation">
+        <i class="fa-solid fa-building-columns"></i>
+        <span>Rensselaer Polytechnic Institute (RPI) &amp; IBM Quantum</span>
+      </div>
+
+      <!-- Background & Motivation -->
+      <div class="challenge-section-heading">Background &amp; Motivation</div>
+      <p class="challenge-body-text">
+        Quantum Key Distribution (QKD) leverages physical postulates of quantum mechanics (the no-cloning theorem and Heisenberg uncertainty principle) to establish unconditionally secure cryptographic keys.
+      </p>
+
+      <!-- The Challenge Box -->
+      <div class="the-challenge-box">
+        <div class="the-challenge-title">
+          <i class="fa-solid fa-bolt" style="color:var(--accent-pink-glow)"></i>
+          <span>The Challenge</span>
+        </div>
+        <p class="the-challenge-desc">
+          Construct an end-to-end, fully functional BB84 Quantum Key Distribution and post-processing simulation pipeline using Qiskit. Simulate the complete transmission workflow across Alice, Bob, and Eve, evaluate information leakage under realistic channel noise models, and place QKD within the broader landscape of Post-Quantum Cryptography (PQC).
+        </p>
+      </div>
+
+      <!-- Getting Started & Technical Objectives -->
+      <div class="challenge-section-heading" style="margin-bottom: 1rem;">
+        Getting Started &amp; Technical Objectives
+      </div>
+
+      <!-- 4 Technical Objectives Cards -->
+      <div class="pipeline-overview-grid" style="margin-bottom: 1.75rem;">
+        <!-- Card 1 -->
+        <div class="overview-card active" data-target="module-1">
+          <div class="card-num-title">
+            <span class="card-badge">1</span>
+            State Preparation &amp; Quantum Channel
+          </div>
+          <p class="card-description">
+            Alice generates random classical bits and chooses between rectilinear (Z) and diagonal (X) bases, transmitting qubits through a simulated noisy quantum channel.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="overview-card" data-target="module-2">
+          <div class="card-num-title">
+            <span class="card-badge">2</span>
+            Eavesdropping Attacks
+          </div>
+          <p class="card-description">
+            Implement Intercept-Resend Attack (Eve measures in random basis and reprepairs states) and Entanglement-based / Beam-Splitter Attack (Eve couples ancilla probe qubits via CNOT gates).
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="overview-card" data-target="module-3">
+          <div class="card-num-title">
+            <span class="card-badge">3</span>
+            Measurement, Sifting &amp; Error Correction
+          </div>
+          <p class="card-description">
+            Bob measures in random bases, parties execute public basis reconciliation (sifting), calculate QBER over sacrificed sample, and execute classical error correction (Cascade/Winnow) + Privacy Amplification (Toeplitz hashing).
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="overview-card" data-target="module-4">
+          <div class="card-num-title">
+            <span class="card-badge">4</span>
+            Post-Quantum Cryptography Comparative Study
+          </div>
+          <p class="card-description">
+            Benchmark security, hardware requirements, key generation rates, and network scalability of BB84 against leading NIST Post-Quantum Cryptographic standards (ML-KEM / Kyber lattice-based key encapsulation).
+          </p>
+        </div>
+      </div>
+
+      <!-- Key Quantitative Metrics -->
+      <div class="challenge-section-heading" style="margin-bottom: 0.9rem;">
+        Key Quantitative Metrics
+      </div>
+      <ul class="metrics-list" style="margin-bottom: 1.75rem;">
+        <li class="metric-item">
+          <span class="metric-bullet">•</span>
+          <div>
+            <strong>Quantum Bit Error Rate (QBER):</strong>
+            <span class="metric-formula">QBER = N_error / N_sifted</span>
+            (Baseline: 0%; Intercept-Resend: ~25%; Shor-Preskill abort: ~11%)
+          </div>
+        </li>
+        <li class="metric-item">
+          <span class="metric-bullet">•</span>
+          <div>
+            <strong>Asymptotic Secret Key Rate (R):</strong>
+            <span class="metric-formula">R ≥ 1 - 2H_2(QBER)</span>, where
+            <span class="metric-formula">H_2 is binary Shannon entropy</span>
+          </div>
+        </li>
+        <li class="metric-item">
+          <span class="metric-bullet">•</span>
+          <div>
+            <strong>Mutual Information Advantage:</strong>
+            <span class="metric-formula">ΔI = I(A; B) - I(A; E)</span>; verify
+            <span class="metric-formula">ΔI &gt; 0</span> for positive distillable key length
+          </div>
+        </li>
+      </ul>
+
+      <!-- Evaluation Criteria (Gold Border from image) -->
+      <div class="eval-criteria-card">
+        <div class="eval-criteria-title">Evaluation Criteria</div>
+        <p class="eval-criteria-text">
+          Protocol Completeness &amp; Correctness (30%), Eavesdropping Analysis &amp; Noise Modeling (30%), PQC Comparative Analysis (20%), Code Clarity &amp; Presentation (20%)
+        </p>
+      </div>
+
+      <!-- Recommended Toolkit -->
+      <div class="challenge-section-heading" style="margin-top: 1.5rem; margin-bottom: 0.5rem;">
+        Recommended Toolkit
+      </div>
+      <div class="toolkit-pills-row">
+        <span class="toolkit-pill"><i class="fa-solid fa-microchip" style="margin-right:0.4rem;color:#fb7185"></i> Qiskit</span>
+        <span class="toolkit-pill"><i class="fa-solid fa-wave-square" style="margin-right:0.4rem;color:#c084fc"></i> Qiskit Aer (NoiseModel)</span>
+        <span class="toolkit-pill"><i class="fa-solid fa-shield-virus" style="margin-right:0.4rem;color:#38bdf8"></i> Cascade / Winnow Protocol</span>
+        <span class="toolkit-pill"><i class="fa-solid fa-fingerprint" style="margin-right:0.4rem;color:#34d399"></i> Toeplitz Hashing</span>
+        <span class="toolkit-pill"><i class="fa-solid fa-scale-balanced" style="margin-right:0.4rem;color:#f59e0b"></i> NIST ML-KEM Benchmarks</span>
+      </div>
+
+      <!-- Bottom Action Buttons (Matching Screenshot) -->
+      <div class="challenge-action-buttons">
+        <button type="button" class="btn-gdrive" id="btnOpenCodePackage">
+          <i class="fa-solid fa-file-code"></i>
+          <span>Open in Google Drive (PDF &amp; Code)</span>
+          <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;margin-left:0.25rem;"></i>
+        </button>
+        <button type="button" class="btn-close-briefing" id="btnLaunchSimFromBriefing">
+          Launch Interactive Simulator
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         INTERACTIVE SIMULATION LAB & WORKSPACE
+         ========================================================================= -->
+    <div id="simulatorSection">
+      <!-- Action Toolbar -->
+      <div class="control-toolbar">
+        <div class="toolbar-group">
+          <button type="button" class="btn btn-primary" id="btnRunFull">
+            <i class="fa-solid fa-bolt"></i> Run Full Protocol Simulation
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnReset">
+            <i class="fa-solid fa-arrow-rotate-left"></i> Reset Defaults
+          </button>
+          <button type="button" class="btn btn-outline-pink btn-sm" id="btnToggleBriefing">
+            <i class="fa-solid fa-file-lines"></i> View Track 07 Briefing
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">
+            Engine: <strong style="color:#fff">Qiskit Compatible Simulation</strong>
+          </span>
+          <button type="button" class="btn btn-outline-pink btn-sm" id="btnExportCSV">
+            <i class="fa-solid fa-file-csv"></i> Export Qubit Log (CSV)
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Workspace (Visualizer & Modules + Sidebar) -->
+      <div class="workspace-grid">
+        <!-- Left Column: Visualizer & Active Module -->
+        <div>
+          <!-- Quantum Channel Animated Visualizer -->
+          <div class="quantum-visualizer-box">
+            <div class="canvas-header">
+              <div>
+                <i class="fa-solid fa-wave-square" style="color:var(--accent-pink-glow)"></i>
+                <strong>Simulated Quantum Optical Channel</strong> (Single-Photon Wavepackets)
+              </div>
+              <div class="canvas-controls">
+                <span>Polarization States: <strong>0° (H), 90° (V), +45° (D), -45° (A)</strong></span>
+              </div>
+            </div>
+            <canvas id="quantumChannelCanvas"></canvas>
+          </div>
+
+          <!-- Module Tabs Navigation -->
+          <div class="module-tabs">
+            <button type="button" class="module-tab-btn active" data-target="module-1">
+              <i class="fa-solid fa-paper-plane"></i> 1. State Prep &amp; Channel
+            </button>
+            <button type="button" class="module-tab-btn" data-target="module-2">
+              <i class="fa-solid fa-user-secret"></i> 2. Eavesdropping Attacks
+            </button>
+            <button type="button" class="module-tab-btn" data-target="module-3">
+              <i class="fa-solid fa-key"></i> 3. Sifting &amp; Cascade
+            </button>
+            <button type="button" class="module-tab-btn" data-target="module-4">
+              <i class="fa-solid fa-scale-balanced"></i> 4. PQC Comparative Study
+            </button>
+            <button type="button" class="module-tab-btn" data-target="module-5">
+              <i class="fa-brands fa-python" style="color:#38bdf8"></i> 5. Qiskit Code
+            </button>
+          </div>
+
+          <!-- MODULE 1: State Preparation & Quantum Channel -->
+          <div class="module-section active" id="module-1">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">
+                  <i class="fa-solid fa-sliders" style="color:var(--accent-pink)"></i>
+                  Module 1: State Preparation &amp; Quantum Channel
+                </h2>
+                <p class="section-subtitle">
+                  Configure Alice's random state generator, orthogonal conjugate bases, and fiber optics channel properties.
+                </p>
+              </div>
+            </div>
+
+            <div class="stations-grid">
+              <!-- Alice's Transmitter -->
+              <div class="station-card alice">
+                <div class="station-title">
+                  <span>Alice (Transmitter Station)</span>
+                  <span class="station-badge" style="color:#fb7185">TX Node</span>
+                </div>
+                <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
+                  Alice prepares qubits in two mutually unbiased conjugate bases:
+                </p>
+
+                <div style="display:flex;gap:0.75rem;margin-bottom:1.25rem;">
+                  <div style="flex:1;background:#0d0e19;padding:0.75rem;border-radius:10px;border:1px solid var(--border-subtle)">
+                    <div style="font-weight:700;color:#38bdf8;font-size:0.85rem;margin-bottom:0.25rem;">Rectilinear (Z)</div>
+                    <div style="font-size:0.78rem;color:var(--text-muted)">
+                      |0⟩ = 0° (Horizontal ↔)<br />
+                      |1⟩ = 90° (Vertical ↕)
+                    </div>
+                  </div>
+                  <div style="flex:1;background:#0d0e19;padding:0.75rem;border-radius:10px;border:1px solid var(--border-subtle)">
+                    <div style="font-weight:700;color:#c084fc;font-size:0.85rem;margin-bottom:0.25rem;">Diagonal (X)</div>
+                    <div style="font-size:0.78rem;color:var(--text-muted)">
+                      |+⟩ = +45° (Diagonal ↗)<br />
+                      |−⟩ = -45° (Anti-diag ↘)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">
+                    <span>Number of Transmitted Qubits</span>
+                    <span class="form-value-badge" id="numQubitsVal">48</span>
+                  </label>
+                  <input type="range" class="range-slider" id="numQubitsInput" min="16" max="256" step="8" value="48" />
+                </div>
+              </div>
+
+              <!-- Quantum Channel Properties -->
+              <div class="station-card">
+                <div class="station-title">
+                  <span>Optical Fiber Channel</span>
+                  <span class="station-badge">Telecom C-Band</span>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">
+                    <span>Fiber Distance (L)</span>
+                    <span class="form-value-badge" id="fiberLengthVal">15 km</span>
+                  </label>
+                  <input type="range" class="range-slider" id="fiberLengthInput" min="0" max="100" step="5" value="15" />
+                  <span style="font-size:0.74rem;color:var(--text-dim)">Standard single-mode attenuation: α = 0.20 dB/km</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">
+                    <span>Depolarization Noise Probability (p_noise)</span>
+                    <span class="form-value-badge" id="noiseVal">1%</span>
+                  </label>
+                  <input type="range" class="range-slider" id="noiseInput" min="0" max="0.10" step="0.01" value="0.01" />
+                  <span style="font-size:0.74rem;color:var(--text-dim)">Simulates Qiskit Aer depolarizing_error noise model</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODULE 2: Eavesdropping Attacks -->
+          <div class="module-section" id="module-2">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">
+                  <i class="fa-solid fa-user-secret" style="color:var(--accent-amber)"></i>
+                  Module 2: Eavesdropping Attacks Lab
+                </h2>
+                <p class="section-subtitle">
+                  Simulate passive vs active adversaries: Intercept-Resend and Entanglement Ancilla Probe (CNOT) attacks.
+                </p>
+              </div>
+            </div>
+
+            <div class="pill-selector">
+              <div class="pill-option attack-pill-btn active" data-attack="none">
+                <div class="pill-title"><i class="fa-solid fa-check"></i> Clean Channel</div>
+                <div class="pill-desc">No eavesdropping present</div>
+              </div>
+              <div class="pill-option attack-pill-btn" data-attack="intercept-resend">
+                <div class="pill-title"><i class="fa-solid fa-scissors"></i> Intercept-Resend</div>
+                <div class="pill-desc">Eve measures &amp; reprepairs</div>
+              </div>
+              <div class="pill-option attack-pill-btn" data-attack="entanglement-cnot">
+                <div class="pill-title"><i class="fa-solid fa-link"></i> CNOT Ancilla Probe</div>
+                <div class="pill-desc">Entanglement / Beam splitter</div>
+              </div>
+            </div>
+
+            <!-- Attack Details & Controls -->
+            <div id="interceptResendControls" style="display:none;background:#131422;padding:1.25rem;border-radius:12px;border:1px solid var(--border-subtle);margin-bottom:1rem;">
+              <h4 style="color:#fbbf24;font-size:0.92rem;margin-bottom:0.5rem;">
+                <i class="fa-solid fa-info-circle"></i> Intercept-Resend Attack Physics
+              </h4>
+              <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.5;margin-bottom:1rem;">
+                Eve intercepts photons in transit, randomly selects a measurement basis (Z or X), measures the state, and reprepairs a new photon in her measured outcome. Because Eve guesses the wrong basis 50% of the time, she causes Bob to measure an incorrect bit with probability <strong>25%</strong> on matching bases.
+              </p>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">
+                  <span>Eve Interception Tap Probability</span>
+                  <span class="form-value-badge" id="eveTapVal">100%</span>
+                </label>
+                <input type="range" class="range-slider" id="eveTapInput" min="10" max="100" step="5" value="100" />
+              </div>
+            </div>
+
+            <div id="cnotControls" style="display:none;background:#131422;padding:1.25rem;border-radius:12px;border:1px solid var(--border-subtle);margin-bottom:1rem;">
+              <h4 style="color:#c084fc;font-size:0.92rem;margin-bottom:0.5rem;">
+                <i class="fa-solid fa-atom"></i> Entanglement &amp; Ancilla Probe Attack (CNOT)
+              </h4>
+              <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.5;margin-bottom:1rem;">
+                Eve interacts an ancilla probe qubit |0⟩_E with Alice's flying photon via a CNOT gate:
+                <br />
+                <code style="color:#38bdf8">U_CNOT |q⟩_A |0⟩_E</code>. Eve stores her probe in a coherent quantum memory until basis reconciliation is publicly broadcast, then measures the ancilla in the declared basis.
+              </p>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">
+                  <span>CNOT Interaction Coupling Angle (θ)</span>
+                  <span class="form-value-badge" id="cnotAngleVal">90°</span>
+                </label>
+                <input type="range" class="range-slider" id="cnotAngleInput" min="15" max="90" step="15" value="90" />
+              </div>
+            </div>
+
+            <!-- Quantum Circuit Schematic -->
+            <div class="circuit-schematic-box">
+              <div class="circuit-schematic-title">Quantum Circuit: Eve Ancilla CNOT Interaction</div>
+              <svg class="circuit-svg" viewBox="0 0 540 130" xmlns="http://www.w3.org/2000/svg">
+                <!-- Alice Qubit Line -->
+                <text x="15" y="40" fill="#fb7185" font-size="12" font-family="monospace">|ψ⟩_A</text>
+                <line x1="60" y1="36" x2="480" y2="36" stroke="#475569" stroke-width="2" />
+                
+                <!-- Eve Ancilla Line -->
+                <text x="15" y="94" fill="#fbbf24" font-size="12" font-family="monospace">|0⟩_E</text>
+                <line x1="60" y1="90" x2="480" y2="90" stroke="#475569" stroke-width="2" />
+
+                <!-- CNOT Gate -->
+                <circle cx="200" cy="36" r="6" fill="#38bdf8" />
+                <line x1="200" y1="36" x2="200" y2="90" stroke="#38bdf8" stroke-width="2" />
+                <circle cx="200" cy="90" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+                <line x1="186" y1="90" x2="214" y2="90" stroke="#38bdf8" stroke-width="2" />
+                <line x1="200" y1="76" x2="200" y2="104" stroke="#38bdf8" stroke-width="2" />
+                
+                <!-- Quantum Memory Box on Eve -->
+                <rect x="250" y="74" width="75" height="32" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1.5" />
+                <text x="287" y="94" fill="#c084fc" font-size="10" font-family="sans-serif" text-anchor="middle">Q-Memory</text>
+
+                <!-- Measurement Meter for Bob -->
+                <rect x="420" y="20" width="45" height="32" rx="6" fill="#0c4a6e" stroke="#0ea5e9" stroke-width="1.5" />
+                <text x="442" y="38" fill="#fff" font-size="10" font-family="sans-serif" text-anchor="middle">Bob M</text>
+
+                <!-- Delayed Measurement Meter for Eve -->
+                <rect x="420" y="74" width="45" height="32" rx="6" fill="#713f12" stroke="#eab308" stroke-width="1.5" />
+                <text x="442" y="92" fill="#fff" font-size="10" font-family="sans-serif" text-anchor="middle">Eve M</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- MODULE 3: Measurement, Sifting, Error Correction & Privacy Amplification -->
+          <div class="module-section" id="module-3">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">
+                  <i class="fa-solid fa-key" style="color:var(--accent-cyan)"></i>
+                  Module 3: Sifting, Cascade &amp; Privacy Amplification
+                </h2>
+                <p class="section-subtitle">
+                  Basis reconciliation, sacrificed sample QBER evaluation, Cascade parity error correction, and Toeplitz hashing.
+                </p>
+              </div>
+            </div>
+
+            <!-- Cascade Visualizer -->
+            <div style="background:#121320;border:1px solid var(--border-subtle);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                <strong style="color:#fff;font-size:0.92rem;">
+                  <i class="fa-solid fa-shield-virus" style="color:var(--accent-emerald)"></i>
+                  Cascade Error Correction Passes
+                </strong>
+                <span style="font-size:0.78rem;color:var(--text-muted)">Block Size k = 4 | Dichotomic Binary Search</span>
+              </div>
+              <div id="cascadeBlocksContainer" class="cascade-blocks-grid">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Toeplitz Hash Privacy Amplification Output -->
+            <div style="background:#121320;border:1px solid var(--border-subtle);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                <strong style="color:#fff;font-size:0.92rem;">
+                  <i class="fa-solid fa-fingerprint" style="color:var(--accent-pink)"></i>
+                  Privacy Amplification (Toeplitz Hashing GF(2))
+                </strong>
+                <span id="keyMatchBadge" class="status-pill">Shared Key Generated</span>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.75rem;">
+                <div>
+                  <span style="font-size:0.76rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em">Alice Distilled Key (Hex):</span>
+                  <div class="key-stream-box" id="aliceFinalKeyBox">Awaiting simulation...</div>
+                </div>
+                <div>
+                  <span style="font-size:0.76rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em">Bob Distilled Key (Hex):</span>
+                  <div class="key-stream-box" id="bobFinalKeyBox">Awaiting simulation...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Encrypted Communication Demo -->
+            <div style="background:#121320;border:1px solid var(--border-subtle);border-radius:14px;padding:1.25rem;">
+              <strong style="color:#fff;font-size:0.92rem;display:block;margin-bottom:0.75rem;">
+                <i class="fa-solid fa-lock" style="color:var(--accent-pink)"></i>
+                Live Quantum-Secured One-Time Pad (OTP) Encryption
+              </strong>
+              <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
+                Demonstrate secret message transmission encrypted with the distilled quantum key:
+              </p>
+
+              <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
+                <input type="text" id="secretPlaintextInput" value="RPI-IBM-QUANTUM: UNCONDITIONAL BB84 SECURITY VERIFIED" style="flex:1;background:#090a12;border:1px solid var(--border-subtle);border-radius:8px;padding:0.6rem 0.9rem;color:#fff;font-family:inherit;font-size:0.85rem;" />
+                <button type="button" class="btn btn-primary btn-sm" id="btnEncryptMessage">
+                  <i class="fa-solid fa-lock"></i> Encrypt Message
+                </button>
+              </div>
+
+              <div class="crypto-chat-grid">
+                <div class="chat-actor-card alice">
+                  <strong style="color:#fb7185;font-size:0.85rem;">Alice (Sender)</strong>
+                  <div class="chat-bubble">
+                    <span style="color:var(--text-dim);font-size:0.72rem;display:block">Ciphertext Stream (Hex):</span>
+                    <span id="cipherOutputBox" style="font-family:var(--font-mono);color:#38bdf8;word-break:break-all;">Click Encrypt to generate</span>
+                  </div>
+                </div>
+
+                <div class="chat-actor-card eve">
+                  <strong style="color:#fbbf24;font-size:0.85rem;">Eve (Eavesdropper Intercept)</strong>
+                  <div class="chat-bubble">
+                    <span style="color:var(--text-dim);font-size:0.72rem;display:block">Eve Inferred Decryption:</span>
+                    <span id="eveDecryptedBox" style="font-family:var(--font-mono);color:#f43f5e;word-break:break-all;">Ø (Garbled entropy)</span>
+                  </div>
+                </div>
+
+                <div class="chat-actor-card bob">
+                  <strong style="color:#38bdf8;font-size:0.85rem;">Bob (Receiver)</strong>
+                  <div class="chat-bubble">
+                    <span style="color:var(--text-dim);font-size:0.72rem;display:block">Decrypted Plaintext:</span>
+                    <span id="bobDecryptedBox" style="font-family:inherit;color:#34d399;font-weight:600;">Awaiting transmission...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODULE 4: Post-Quantum Cryptography Comparative Study -->
+          <div class="module-section" id="module-4">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">
+                  <i class="fa-solid fa-scale-balanced" style="color:var(--accent-purple)"></i>
+                  Module 4: Post-Quantum Cryptography Comparative Study
+                </h2>
+                <p class="section-subtitle">
+                  Rigorous benchmarking of BB84 QKD against NIST PQC standards (FIPS 203: ML-KEM / CRYSTALS-Kyber).
+                </p>
+              </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+              <table class="pqc-comparison-table">
+                <thead>
+                  <tr>
+                    <th>Standard / Algorithm</th>
+                    <th>Security Foundation</th>
+                    <th>Quantum Resistance Level</th>
+                    <th>Hardware Requirements</th>
+                    <th>Throughput Rate</th>
+                    <th>Distance Limits</th>
+                    <th>Network Scalability</th>
+                  </tr>
+                </thead>
+                <tbody id="pqcTableBody">
+                  <!-- Dynamically populated from quantum-engine.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.5rem;">
+              <div style="background:#121320;border:1px solid var(--border-subtle);border-radius:12px;padding:1.25rem;">
+                <h4 style="color:#fb7185;font-size:0.92rem;margin-bottom:0.6rem;">
+                  <i class="fa-solid fa-circle-check"></i> When to Deploy BB84 QKD
+                </h4>
+                <ul style="font-size:0.82rem;color:var(--text-muted);padding-left:1.2rem;line-height:1.6;">
+                  <li>Critical government, defense, and sovereign backbone fiber links.</li>
+                  <li>Data requiring eternal confidentiality (50+ years secrecy horizon) to defeat "Harvest-Now-Decrypt-Later" (HNDL) attacks.</li>
+                  <li>Scenarios where physical optical access can be strictly guaranteed.</li>
+                </ul>
+              </div>
+
+              <div style="background:#121320;border:1px solid var(--border-subtle);border-radius:12px;padding:1.25rem;">
+                <h4 style="color:#c084fc;font-size:0.92rem;margin-bottom:0.6rem;">
+                  <i class="fa-solid fa-circle-check"></i> When to Deploy NIST ML-KEM (Kyber)
+                </h4>
+                <ul style="font-size:0.82rem;color:var(--text-muted);padding-left:1.2rem;line-height:1.6;">
+                  <li>Global public internet, commercial web browsing (TLS 1.3), and mobile devices.</li>
+                  <li>Zero-cost deployment requiring no specialized optical or cryogenic hardware.</li>
+                  <li>Multi-hop networks, satellite communications, and high-latency global meshes.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODULE 5: Qiskit Python Code & Circuit -->
+          <div class="module-section" id="module-5">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">
+                  <i class="fa-brands fa-python" style="color:#38bdf8"></i>
+                  Module 5: Qiskit Pipeline &amp; Aer Noise Model Code
+                </h2>
+                <p class="section-subtitle">
+                  Executable Qiskit code implementing the complete circuit workflow, depolarizing noise models, and CNOT probes.
+                </p>
+              </div>
+              <div style="display:flex;gap:0.5rem;">
+                <button type="button" class="btn btn-primary btn-sm" id="btnCopyQiskitCode">
+                  <i class="fa-solid fa-copy"></i> Copy Code
+                </button>
+                <a href="bb84_qiskit_pipeline.py" download="bb84_qiskit_pipeline.py" class="btn btn-secondary btn-sm">
+                  <i class="fa-solid fa-download"></i> Download .py
+                </a>
+              </div>
+            </div>
+
+            <div class="qiskit-code-box" id="qiskitCodePre">
+# ==============================================================================
+# Rensselaer Polytechnic Institute (RPI) & IBM Quantum - Track 07
+# Complete BB84 Qiskit Simulation Pipeline
+# ==============================================================================
+
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+from qiskit_aer import AerSimulator
+from qiskit_aer.noise import NoiseModel, depolarizing_error
+import math, random
+
+# 1. Quantum State Preparation (Alice)
+# Encode classical bit into Conjugate Bases: Z (|0>, |1>) or X (|+>, |->)
+qr = QuantumRegister(2, 'q')
+cr = ClassicalRegister(2, 'c')
+qc = QuantumCircuit(qr, cr)
+
+# Alice prepares |-> state (Bit 1 in X Basis)
+qc.x(qr[0])
+qc.h(qr[0])
+
+# 2. Adversary Interception: Eve couples Ancilla Probe via CNOT
+qc.cx(qr[0], qr[1])
+
+# 3. Bob measures in X basis
+qc.h(qr[0])
+qc.measure(qr[0], cr[0])
+
+# Eve performs delayed measurement on probe in declared basis
+qc.measure(qr[1], cr[1])
+
+# 4. Realistic Channel Noise Model (Qiskit Aer)
+noise_model = NoiseModel()
+noise_model.add_all_qubit_quantum_error(depolarizing_error(0.015, 1), ['h', 'x'])
+noise_model.add_all_qubit_quantum_error(depolarizing_error(0.030, 2), ['cx'])
+
+simulator = AerSimulator(noise_model=noise_model)
+job = simulator.run(qc, shots=1024)
+print("Simulation complete! Results:", job.result().get_counts())
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Sidebar Live Metrics Gauges -->
+        <div class="sidebar-panel">
+          <!-- Live Quantitative Metrics Gauges -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">
+              <span>Quantitative Metrics</span>
+              <i class="fa-solid fa-chart-line" style="color:var(--accent-pink)"></i>
+            </div>
+
+            <!-- Security Status Banner -->
+            <div id="securityStatusAlert" class="security-alert pending">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              <div>Initializing quantum simulation engine...</div>
+            </div>
+
+            <!-- Gauge 1: QBER -->
+            <div class="gauge-container">
+              <div class="gauge-header">
+                <span class="gauge-label">QBER (Sample Error Rate)</span>
+                <span class="gauge-val safe" id="qberVal">0.0%</span>
+              </div>
+              <div class="meter-track">
+                <!-- 11% Shor-Preskill marker pin -->
+                <div class="meter-threshold-marker" style="left: 36.6%" title="Shor-Preskill Abort Limit (11.0%)"></div>
+                <div class="meter-fill" id="qberMeterFill" style="width: 0%; background-color: var(--accent-emerald);"></div>
+              </div>
+              <div class="meter-legend">
+                <span>0% (Baseline)</span>
+                <span style="color:#fb7185">11.0% (Abort Limit)</span>
+                <span>30%</span>
+              </div>
+            </div>
+
+            <!-- Gauge 2: Asymptotic Secret Key Rate R -->
+            <div class="gauge-container">
+              <div class="gauge-header">
+                <span class="gauge-label">Asymptotic Key Rate (R)</span>
+                <span class="gauge-val safe" id="keyRateVal">1.000</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill" id="keyRateMeterFill" style="width: 100%; background-color: var(--accent-emerald);"></div>
+              </div>
+              <div class="meter-legend">
+                <span>R = 0 (Abort)</span>
+                <span>R ≥ 1 - 2H₂(QBER)</span>
+                <span>R = 1.0</span>
+              </div>
+            </div>
+
+            <!-- Gauge 3: Mutual Information Advantage Delta I -->
+            <div class="gauge-container" style="margin-bottom:0">
+              <div class="gauge-header">
+                <span class="gauge-label">Mutual Info Advantage (ΔI)</span>
+                <span class="gauge-val safe" id="deltaIVal">+1.000 (ΔI &gt; 0)</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill" id="deltaIMeterFill" style="width: 100%; background-color: var(--accent-cyan);"></div>
+              </div>
+              <div class="meter-legend">
+                <span>ΔI ≤ 0 (Insecure)</span>
+                <span>I(A;B) - I(A;E)</span>
+                <span>+1.000 (Secure)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evaluation Rubric Progress Card -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">
+              <span style="color:#fbbf24">Evaluation Rubric (100%)</span>
+              <i class="fa-solid fa-award" style="color:#fbbf24"></i>
+            </div>
+            <div style="font-size:0.82rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.65rem;">
+              <div style="display:flex;justify-content:space-between">
+                <span>Protocol Completeness:</span>
+                <strong style="color:#34d399">30% (Verified)</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span>Eavesdropping &amp; Noise:</span>
+                <strong style="color:#34d399">30% (Verified)</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span>PQC Comparative Study:</span>
+                <strong style="color:#34d399">20% (Verified)</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span>Code Presentation:</span>
+                <strong style="color:#34d399">20% (Verified)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Qubit Transmission Inspector Table -->
+      <div style="margin-top:2.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+          <div>
+            <h3 style="color:#fff;font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;">
+              <i class="fa-solid fa-list-check" style="color:var(--accent-pink)"></i>
+              Per-Qubit Transmission Log &amp; Sifting Inspector
+            </h3>
+            <span id="tableCountLabel" style="font-size:0.8rem;color:var(--text-muted);">
+              Displaying live transmission states
+            </span>
+          </div>
+
+          <!-- Filter Buttons -->
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary btn-sm table-filter-btn active" data-filter="all">All</button>
+            <button type="button" class="btn btn-secondary btn-sm table-filter-btn" data-filter="sifted">Sifted Matches</button>
+            <button type="button" class="btn btn-secondary btn-sm table-filter-btn" data-filter="errors">Errors Found</button>
+            <button type="button" class="btn btn-secondary btn-sm table-filter-btn" data-filter="sacrificed">Sacrificed Test</button>
+            <button type="button" class="btn btn-secondary btn-sm table-filter-btn" data-filter="finalKey">Final Distilled Key</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="qubit-table">
+            <thead>
+              <tr>
+                <th>Qubit #</th>
+                <th>Alice Bit</th>
+                <th>Alice Basis</th>
+                <th>State Prepared</th>
+                <th>Eve Intercept</th>
+                <th>Bob Basis</th>
+                <th>Bob Measured</th>
+                <th>Sifting (Bases Match)</th>
+                <th>QBER Sample Check</th>
+                <th>Final Key Bit</th>
+              </tr>
+            </thead>
+            <tbody id="qubitTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-bar">
+      <div>
+        Rensselaer Polytechnic Institute (RPI) &amp; IBM Quantum · Track 07: Cybersecurity &amp; Networks
+      </div>
+      <div style="margin-top:0.4rem;">
+        Information-Theoretic Cybersecurity with BB84 Quantum Key Distribution &amp; NIST PQC Studio.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/quantum-engine.js"></script>
+  <script src="assets/js/quantum-ui.js"></script>
+</body>
+</html>

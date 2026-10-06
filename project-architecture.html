@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theory &amp; Mathematics · BB84 QKD &amp; NIST PQC</title>
+  <meta name="description" content="Mathematical foundations, security proofs, Shor-Preskill bounds, and lattice-based cryptography" />
+  
+  <link rel="stylesheet" href="assets/css/vendor/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/quantum.css" />
+
+  <style>
+    .math-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .math-card h3 {
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .equation-box {
+      background: #090a14;
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-pink);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      color: #38bdf8;
+      overflow-x: auto;
+    }
+    .proof-step {
+      margin-bottom: 0.75rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header-bar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-atom" style="font-size: 1.4rem; color: #fff;"></i>
+        </div>
+        <div>
+          <div class="brand-title">Quantum<span>Lab</span></div>
+          <div class="brand-subtitle">RPI &amp; IBM Quantum · Track 07</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-play"></i> Simulator</a>
+        <a href="pqc-benchmark.html" class="nav-link"><i class="fa-solid fa-chart-simple"></i> PQC Benchmark</a>
+        <a href="project-architecture.html" class="nav-link active"><i class="fa-solid fa-book-open"></i> Theory &amp; Math</a>
+      </nav>
+    </header>
+
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h1 style="font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;">
+        Theoretical Foundations &amp; Mathematical Rigor
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;">
+        Complete derivations of Bennett-Brassard 1984 (BB84), Shor-Preskill security proofs, Holevo bounds, CNOT ancilla probes, and NIST FIPS 203 (ML-KEM) lattice cryptography.
+      </p>
+
+      <!-- Section 1 -->
+      <div class="math-card">
+        <h3><i class="fa-solid fa-cube" style="color:var(--accent-pink)"></i> 1. Quantum State Spaces &amp; Mutually Unbiased Bases (MUBs)</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          BB84 operates on two-dimensional Hilbert space \(\mathcal{H}_2\). Alice encodes classical bits into two conjugate, non-orthogonal bases:
+        </p>
+        <div class="equation-box">
+          Computational / Rectilinear (Z):  {|0⟩, |1⟩}  with angles θ = 0°, 90°<br />
+          Hadamard / Diagonal (X):       {|+⟩, |−⟩}  where |±⟩ = (|0⟩ ± |1⟩) / √2
+        </div>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          These bases are <strong>mutually unbiased</strong> because the overlap between any state in \(\mathcal{B}_Z\) and any state in \(\mathcal{B}_X\) is strictly constant:
+        </p>
+        <div class="equation-box">
+          |⟨z_i | x_j⟩|² = |(1 / √2)|² = 1/2 = 50%
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;">
+          By Heisenberg's Uncertainty Principle and the No-Cloning Theorem, any measurement by an eavesdropper in the incorrect basis irrevocably collapses the quantum superposition, introducing detectable disturbance.
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="math-card">
+        <h3><i class="fa-solid fa-calculator" style="color:var(--accent-purple)"></i> 2. The Shor-Preskill Security Proof &amp; 11% Abort Threshold</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          In 2000, Peter Shor and John Preskill proved the unconditional security of BB84 by reducing it to Calderbank-Shor-Steane (CSS) quantum error-correcting codes.
+        </p>
+        <div class="equation-box">
+          Asymptotic Secret Key Fraction: R ≥ 1 - 2 · H₂(QBER)
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:0.75rem;">
+          Here, \(H_2(p)\) is the binary Shannon entropy function:
+        </p>
+        <div class="equation-box">
+          H₂(p) = -p · log₂(p) - (1 - p) · log₂(1 - p)
+        </div>
+        <div class="proof-step">
+          <strong>Step 1:</strong> To correct bit-flip errors (\(X\)), Alice and Bob sacrifice fraction \(H_2(QBER)\) of sifted bits via classical error correction.
+        </div>
+        <div class="proof-step">
+          <strong>Step 2:</strong> To correct phase-flip errors (\(Z\)), which represent Eve's entanglement with the quantum channel, they sacrifice another fraction \(H_2(QBER)\) via privacy amplification.
+        </div>
+        <div class="proof-step">
+          <strong>Step 3:</strong> The protocol yields positive distilled key length only if \(R &gt; 0\), which requires:
+          <br />
+          <code style="color:#fb7185">1 - 2 · H₂(QBER) &gt; 0  ⟹  H₂(QBER) &lt; 0.5000  ⟹  QBER &lt; 11.00%</code>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin-top:0.75rem;">
+          If the measured sample QBER exceeds <strong>11.0%</strong>, Alice and Bob must immediately abort the protocol, as Eve may possess complete knowledge of the distilled key.
+        </p>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="math-card">
+        <h3><i class="fa-solid fa-link" style="color:var(--accent-amber)"></i> 3. Ancilla Probe Attack &amp; Mutual Information Advantage</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          Eve couples an ancilla qubit \(|0\rangle_E\) to Alice's photon using a controlled unitary operation (such as a CNOT gate):
+        </p>
+        <div class="equation-box">
+          U_CNOT |0⟩_A |0⟩_E = |0⟩_A |0⟩_E<br />
+          U_CNOT |1⟩_A |0⟩_E = |1⟩_A |1⟩_E<br />
+          U_CNOT |+⟩_A |0⟩_E = (|00⟩ + |11⟩) / √2 = (|+⟩|+⟩ + |−⟩|−⟩) / √2
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">
+          By the Csiszár-Körner theorem, secret key distillation via one-way classical public communication is possible if and only if Alice and Bob share a mutual information advantage over Eve:
+        </p>
+        <div class="equation-box">
+          ΔI = I(A; B) - I(A; E) &gt; 0
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;">
+          In an Intercept-Resend attack where Eve intercepts 100% of photons, the induced QBER is 25%. At this point, \(I(A; B) = 1 - H_2(0.25) \approx 0.1887\), while Eve's mutual information \(I(A; E) \approx 0.5000\), resulting in \(\Delta I &lt; 0\) (fatal information deficit).
+        </p>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="math-card">
+        <h3><i class="fa-solid fa-fingerprint" style="color:var(--accent-cyan)"></i> 4. Privacy Amplification via Universal₂ Toeplitz Hashing</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          After Cascade error correction, Alice and Bob share an identical raw key \(K_{corrected}\) of length \(n\), but Eve may possess partial parity information disclosed during public reconciliation.
+        </p>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">
+          To distill a completely secret key of length \(m\), they use a <strong>random Toeplitz matrix</strong> \(T \in \{0, 1\}^{m \times n}\) where matrix elements along each diagonal are constant: \(T_{i, j} = a_{i - j}\).
+        </p>
+        <div class="equation-box">
+          K_final = (T · K_corrected) mod 2
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;">
+          Toeplitz hashing forms a Universal\(_2\) hash family, ensuring that Eve's Renyi collision entropy is maximized and her expected information on the distilled key is exponentially bounded by \(2^{-s}\), where \(s\) is the security parameter.
+        </p>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="math-card">
+        <h3><i class="fa-solid fa-shield-halved" style="color:#c084fc"></i> 5. NIST PQC: Module Learning With Errors (ML-KEM / Kyber)</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+          NIST FIPS 203 standardized <strong>ML-KEM</strong> (based on CRYSTALS-Kyber) as the primary global post-quantum key encapsulation mechanism.
+        </p>
+        <div class="equation-box">
+          M-LWE Problem: Given (A, b = A·s + e) over polynomial ring R_q = ℤ_q[X]/(X²⁵⁶ + 1),<br />
+          find secret vector s ∈ R_q^k given small error vector e ∈ R_q^k.
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">
+          <strong>Comparison Summary:</strong>
+          <br />
+          • <strong>BB84 QKD</strong> provides <em>information-theoretic security</em> grounded in the laws of quantum mechanics, but requires dedicated optical fibers, single-photon detectors, and trusted repeater nodes.
+          <br />
+          • <strong>ML-KEM</strong> provides <em>computational security</em> based on the worst-case hardness of module lattice problems, running seamlessly on ordinary microprocessors across the open global internet.
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer-bar">
+      <div>Quantum Cryptography Laboratory &amp; NIST PQC Studio</div>
+      <div style="margin-top:0.35rem;">
+        <a href="index.html">← Return to Interactive Simulator</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

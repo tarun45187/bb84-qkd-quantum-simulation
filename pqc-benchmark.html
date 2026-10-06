@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PQC Benchmark Studio · BB84 QKD vs NIST ML-KEM</title>
+  <meta name="description" content="Comparative benchmarking of BB84 Quantum Key Distribution against NIST Post-Quantum Cryptography standards (FIPS 203 ML-KEM / Kyber)" />
+  
+  <link rel="stylesheet" href="assets/css/vendor/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/quantum.css" />
+
+  <style>
+    .benchmark-hero {
+      background: linear-gradient(180deg, #18192c 0%, #121320 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .scenario-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .scenario-card:hover {
+      border-color: var(--accent-pink);
+      transform: translateY(-2px);
+    }
+    .scenario-card.active {
+      border-color: var(--accent-pink);
+      background: linear-gradient(180deg, #22233e 0%, #18192c 100%);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
+    }
+    .radar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 860px) {
+      .radar-grid { grid-template-columns: 1fr; }
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header-bar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-atom" style="font-size: 1.4rem; color: #fff;"></i>
+        </div>
+        <div>
+          <div class="brand-title">Quantum<span>Lab</span></div>
+          <div class="brand-subtitle">RPI &amp; IBM Quantum · Track 07</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-play"></i> Simulator</a>
+        <a href="pqc-benchmark.html" class="nav-link active"><i class="fa-solid fa-chart-simple"></i> PQC Benchmark</a>
+        <a href="project-architecture.html" class="nav-link"><i class="fa-solid fa-book-open"></i> Theory &amp; Math</a>
+      </nav>
+    </header>
+
+    <div class="benchmark-hero">
+      <h1 style="color:#fff;font-size:1.85rem;font-weight:800;margin-bottom:0.5rem;">
+        Module 4: Post-Quantum Cryptography Comparative Benchmark
+      </h1>
+      <p style="color:var(--text-muted);font-size:0.95rem;max-width:850px;line-height:1.6;">
+        Evaluate the real-world trade-offs between physical <strong>Quantum Key Distribution (BB84 QKD)</strong> and mathematical <strong>NIST Post-Quantum Cryptography (FIPS 203: ML-KEM / CRYSTALS-Kyber)</strong> across security, throughput, infrastructure cost, and network reach.
+      </p>
+
+      <!-- Deployment Scenario Selector -->
+      <h3 style="color:#fff;font-size:1.05rem;font-weight:700;margin-top:1.75rem;">
+        Select Deployment Network Architecture:
+      </h3>
+      <div class="scenario-selector">
+        <div class="scenario-card active" data-scenario="metro">
+          <div style="font-weight:700;color:#fb7185;margin-bottom:0.3rem;">
+            <i class="fa-solid fa-city"></i> Metro Data Center
+          </div>
+          <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.4;">
+            Dedicated 25 km fiber link between central financial bank vaults.
+          </p>
+        </div>
+
+        <div class="scenario-card" data-scenario="internet">
+          <div style="font-weight:700;color:#c084fc;margin-bottom:0.3rem;">
+            <i class="fa-solid fa-globe"></i> Global Public Internet
+          </div>
+          <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.4;">
+            TLS 1.3 web traffic routing across multiple autonomous systems.
+          </p>
+        </div>
+
+        <div class="scenario-card" data-scenario="submarine">
+          <div style="font-weight:700;color:#38bdf8;margin-bottom:0.3rem;">
+            <i class="fa-solid fa-water"></i> Trans-Oceanic Cable
+          </div>
+          <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.4;">
+            6,000 km undersea fiber cable across continental shelves.
+          </p>
+        </div>
+
+        <div class="scenario-card" data-scenario="satellite">
+          <div style="font-weight:700;color:#34d399;margin-bottom:0.3rem;">
+            <i class="fa-solid fa-satellite"></i> LEO Satellite Downlink
+          </div>
+          <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.4;">
+            Low-Earth orbit free-space optical telescope link to ground station.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparative Radar Grid -->
+    <div class="radar-grid">
+      <!-- BB84 Profile -->
+      <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow-card);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:0.75rem;">
+          <div>
+            <h3 style="color:#fff;font-size:1.15rem;font-weight:700;">BB84 QKD Profile</h3>
+            <span style="font-size:0.78rem;color:var(--accent-pink-glow)">Information-Theoretic Quantum Physics</span>
+          </div>
+          <span class="card-badge" style="background:rgba(244,63,94,0.2);color:#fb7185">Physical</span>
+        </div>
+
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Security Horizon:</span>
+          <strong style="color:#34d399">Unconditional (Infinite Years)</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">HNDL Immunity:</span>
+          <strong style="color:#34d399">100% Immune (No Ciphertext)</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Scenario Throughput:</span>
+          <strong id="bb84RateVal" style="color:#38bdf8">~45 kbps</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Hardware Requirements:</span>
+          <span style="font-size:0.8rem;color:#fca5a5;text-align:right">SNSPD Cryogenic Detectors, Single-Photon Emitters</span>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Direct Distance Limit:</span>
+          <strong style="color:#fb7185">~100–120 km (Fiber)</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Deployment Cost:</span>
+          <strong style="color:#f59e0b">High ($50k–$150k per link)</strong>
+        </div>
+      </div>
+
+      <!-- ML-KEM Profile -->
+      <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow-card);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:0.75rem;">
+          <div>
+            <h3 style="color:#fff;font-size:1.15rem;font-weight:700;">NIST ML-KEM-768 Profile</h3>
+            <span style="font-size:0.78rem;color:#c084fc">Module Lattice Cryptography (FIPS 203)</span>
+          </div>
+          <span class="card-badge" style="background:rgba(168,85,247,0.2);color:#c084fc">Algorithmic</span>
+        </div>
+
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Security Horizon:</span>
+          <strong style="color:#38bdf8">NIST Category 3 (AES-192 eq.)</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">HNDL Immunity:</span>
+          <span style="font-size:0.8rem;color:var(--text-muted);text-align:right">Subject to future mathematical lattice breakthroughs</span>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Scenario Throughput:</span>
+          <strong id="pqcRateVal" style="color:#34d399">&gt; 75,000 handshakes/sec</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Hardware Requirements:</span>
+          <strong style="color:#34d399">Standard Commodity CPU</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Direct Distance Limit:</span>
+          <strong style="color:#34d399">Unlimited (Global IP)</strong>
+        </div>
+        <div class="metric-row">
+          <span style="color:var(--text-muted)">Deployment Cost:</span>
+          <strong style="color:#34d399">$0 (Software library update)</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hybrid Recommendation Architecture -->
+    <div style="margin-top:2rem;background:#131422;border:1px solid var(--border-accent);border-radius:16px;padding:1.5rem;">
+      <h3 style="color:#fff;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;">
+        <i class="fa-solid fa-shield-virus" style="color:var(--accent-pink)"></i>
+        The Recommended Industry Consensus: Hybrid Cryptography
+      </h3>
+      <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;margin-bottom:1rem;">
+        Rather than viewing BB84 and ML-KEM as mutually exclusive, modern defense standards (such as ANSSI and BSI) recommend a <strong>defense-in-depth hybrid architecture</strong>:
+      </p>
+      <div style="background:#090a12;border:1px solid var(--border-subtle);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.86rem;color:#38bdf8;">
+        K_master = HKDF-Extract-Expand( Salt, K_BB84 ∥ K_ML-KEM ∥ K_ECDH )
+      </div>
+      <p style="color:var(--text-muted);font-size:0.84rem;margin-top:0.75rem;line-height:1.5;">
+        This guarantees that even if an adversary breaks the mathematical lattice problem of ML-KEM using future quantum or classical breakthroughs, unconditional privacy is preserved by the underlying BB84 optical layer.
+      </p>
+    </div>
+
+    <footer class="footer-bar">
+      <div>Quantum Cryptography Laboratory &amp; NIST PQC Studio</div>
+      <div style="margin-top:0.35rem;">
+        <a href="index.html">← Return to Interactive Simulator</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const scenarios = {
+      metro: {
+        bb84Rate: '~45 kbps (25 km fiber)',
+        pqcRate: '> 75,000 handshakes/sec'
+      },
+      internet: {
+        bb84Rate: 'Infeasible (requires direct optical fiber)',
+        pqcRate: '> 100,000 handshakes/sec (Drop-in TLS 1.3)'
+      },
+      submarine: {
+        bb84Rate: '0 bps (optical attenuation at 6,000 km requires 60+ trusted nodes)',
+        pqcRate: '> 60,000 handshakes/sec (Standard trans-oceanic IP)'
+      },
+      satellite: {
+        bb84Rate: '~1.5 kbps (Free-space telescope during orbital pass)',
+        pqcRate: '> 50,000 handshakes/sec (Standard radio frequency/laser comms)'
+      }
+    };
+
+    const cards = document.querySelectorAll('.scenario-card');
+    const bb84Rate = document.getElementById('bb84RateVal');
+    const pqcRate = document.getElementById('pqcRateVal');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        const s = scenarios[card.dataset.scenario];
+        if (s) {
+          bb84Rate.textContent = s.bb84Rate;
+          pqcRate.textContent = s.pqcRate;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
